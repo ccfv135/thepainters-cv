@@ -1,0 +1,4 @@
+torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
+transformers==4.44.2
+optimum[exporters]==1.22.0
+onnx==1.16.2
