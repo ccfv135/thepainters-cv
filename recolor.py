@@ -65,7 +65,7 @@ def lab_to_rgb(lab: np.ndarray) -> np.ndarray:
 
 
 def recolor(image: Image.Image, mask_img: Image.Image, target_lab: tuple[float, float, float]) -> Image.Image:
-    rgb = np.asarray(image.convert("RGB"), dtype=np.float64)
+    rgb = np.asarray(image.convert("RGB"), dtype=np.float32)
     lab = rgb_to_lab(rgb)
 
     mask_bool = np.asarray(mask_img.convert("L")) > 127
@@ -93,8 +93,7 @@ def recolor(image: Image.Image, mask_img: Image.Image, target_lab: tuple[float, 
 
     # feather the mask edge so the color change blends instead of a hard cutout
     feather = mask_img.convert("L").filter(ImageFilter.GaussianBlur(FEATHER_RADIUS))
-    alpha = np.asarray(feather, dtype=np.float64)[..., np.newaxis] / 255.0
+    alpha = np.asarray(feather, dtype=np.float32)[..., np.newaxis] / 255.0
 
     blended = np.clip(rgb * (1 - alpha) + recolored_rgb * alpha, 0, 255).astype(np.uint8)
     return Image.fromarray(blended, mode="RGB")
-
