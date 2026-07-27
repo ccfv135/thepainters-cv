@@ -11,7 +11,7 @@ from segment import run_segmentation
 
 app = FastAPI(title="ThePainters CV Service")
 
-MAX_LONG_EDGE = 1600
+MAX_LONG_EDGE = 1024
 MIN_MASK_AREA = 0.08
 
 
@@ -91,4 +91,3 @@ async def simulate(
         response["mask_png_base64"] = mask_png_base64
 
     return JSONResponse(response)
-
