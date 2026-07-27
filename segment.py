@@ -20,6 +20,9 @@ INPUT_SIZE = (PREPROC["size"]["height"], PREPROC["size"]["width"])
 _session_options = ort.SessionOptions()
 _session_options.intra_op_num_threads = 1
 _session_options.inter_op_num_threads = 1
+_session_options.enable_cpu_mem_arena = False
+_session_options.enable_mem_pattern = False
+_session_options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
 _session = ort.InferenceSession(
     os.path.join(MODEL_DIR, "segmentation.onnx"),
     sess_options=_session_options,
