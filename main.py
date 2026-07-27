@@ -1,4 +1,5 @@
 import base64
+import gc
 import io
 from typing import Optional
 
@@ -11,7 +12,7 @@ from segment import run_segmentation
 
 app = FastAPI(title="ThePainters CV Service")
 
-MAX_LONG_EDGE = 1024
+MAX_LONG_EDGE = 768
 MIN_MASK_AREA = 0.08
 
 
@@ -89,5 +90,8 @@ async def simulate(
     }
     if mask_png_base64:
         response["mask_png_base64"] = mask_png_base64
+
+    del image, mask_img, result_img, photo_bytes
+    gc.collect()
 
     return JSONResponse(response)
